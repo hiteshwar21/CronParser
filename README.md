@@ -1,0 +1,85 @@
+# Project Description
+
+This is a Java-based implementation of a Cron Expression Parser.
+It accepts a single cron expression as a string or a file containing the cron expression and generates the expanded schedule for each field in a structured table. The output includes individual times for minute, hour, day of month, month, and day of week, along with the command to be executed.
+
+## Requirements
+
+The project is built using Java 11+. It uses Maven for dependency and build management.
+
+1. Java – 11 or higher
+2. Maven – 3.x.x
+
+## Building the application using maven
+
+You can build and package the application in the form of a standalone executable JAR using Maven:
+
+```sh
+mvn clean package
+```
+
+The above command will generate a jar file named:
+`cronparser.jar`
+Located in the `target/` directory.
+
+## Running tests
+
+The `mvn package` command runs all the unit tests and packages the jar.
+To run the test suite separately (without packaging), run:
+
+```sh
+mvn test
+```
+
+## Running the application
+
+Using a Cron Expression as Argument
+1. You can run the application directly from the CLI:
+```sh
+java -jar target/cronparser.jar "*/15 0 1,15 * 1-5 /usr/bin/find"
+```
+2. Using a File as Input (Batch Mode)
+```sh
+java -jar target/cronparser.jar file_input.txt
+```
+Where input.txt contains multiple cron expressions (one per line).
+
+# Problem Statement
+
+Cron Expression Parser
+Write a command-line application that parses a cron string and expands each field to show the values at which it will run.
+You should support standard cron format:
+
+1. minute (0–59)
+2. hour (0–23)
+3. day of month (1–31)
+4. month (1–12)
+5. day of week (0–6)
+6. command
+
+A valid cron expression includes five time fields + the command.
+
+Input is a single line cron string passed as a command-line argument.
+
+Example:
+Given the expression:
+
+```sh
+*/15 0 1,15 * 1-5 /usr/bin/find
+```
+The expected output is:
+
+```sh
+minute        0 15 30 45
+hour          0
+day of month  1 15
+month         1 2 3 4 5 6 7 8 9 10 11 12
+day of week   1 2 3 4 5
+command       /usr/bin/find
+```
+
+## Supported Features
+1. Parsing of wildcards (*), ranges (1-5), lists (1,5,10), and steps (*/15)
+2. Detailed validation with field-specific error messages
+3. Output formatted as a table (14 char column spacing as per spec)
+4. Unit test coverage for all logic (Input, Parser, Builder, Validation)
