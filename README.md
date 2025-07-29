@@ -101,9 +101,22 @@ command       /usr/bin/find
    - Test Cases
 
 3. Wrap Around Notation
+   - Discuss if next hour is something we are handling
    - update validateRange
    - update getRange
+   
 4. Add Batching Support
-5. Add #(Next N occurrence Support)
-6. Add @Yearly, @Monthly Support
-7. Handle SubCommands
+   - error handling gracefully
+   - Modify ClientInput Interface to take a List
+   - Update CLIClient to return Collections.singletonList(cronString)
+   - Update FileClient to read & return List<String> lines
+   - Update Test Cases
+   
+5. Add @Yearly, @Monthly Support
+   - Create an independent mapper to handle the annotation
+   - Make changes to validationService based on length and remember to return
+   - Add one more check at Handler level based on fieldLength (String is immutable, use a defensive Copy and append)
+   - Update Test Cases
+6. Add # - Nth Occurrence()
+7. Next N occurrence Support
+8. Handle SubCommands

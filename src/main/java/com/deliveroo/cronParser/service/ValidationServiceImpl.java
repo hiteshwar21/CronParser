@@ -6,6 +6,7 @@ import com.deliveroo.cronParser.utils.SymbolicValueMapper;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static com.deliveroo.cronParser.utils.AnnotationMapper.MACRO_MAP;
 import static com.deliveroo.cronParser.utils.CronConstants.*;
 
 public class ValidationServiceImpl implements ValidationService {
@@ -15,6 +16,10 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public void validate(String[] fields) {
         validateFieldLength(fields);
+        if(fields.length == 2) {
+            validateAnnotation(fields);
+            return;
+        }
         validateMinute(fields[0]);
         validateHour(fields[1]);
         validateDayOfMonth(fields[2]);
@@ -30,11 +35,22 @@ public class ValidationServiceImpl implements ValidationService {
     }
 
     private void validateFieldLength(String[] fields) {
-        if (fields == null || (fields.length != 6 && fields.length != 7)) {
+        if (fields == null || (fields.length != 6 && fields.length != 7 && fields.length != 2)) {
             throw new CronExpressionInvalidException(
-                    "Expected 6 or 7 fields (minute, hour, day of month, month, day of week, [year],  command), but got " +
+                    "Expected either macro or full 6 or 7 fields (minute, hour, day of month, month, day of week, [year],  command), but got " +
                             (fields == null ? 0 : fields.length)
             );
+        }
+    }
+
+    private void validateAnnotation(String[] fields) {
+        if (fields[0].startsWith("@")) {
+            String macro = fields[0].toLowerCase();
+            if (!MACRO_MAP.containsKey(macro)) {
+                throw new AnnotationInvalidException("Unsupported macro: " + macro);
+            }
+        } else {
+            throw new AnnotationInvalidException("Unsupported macro: Should have @ prefix");
         }
     }
 

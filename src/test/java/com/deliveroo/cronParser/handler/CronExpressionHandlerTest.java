@@ -1,11 +1,14 @@
 package com.deliveroo.cronParser.handler;
 
+import com.deliveroo.cronParser.exception.AnnotationInvalidException;
 import com.deliveroo.cronParser.exception.MinuteInvalidException;
 import com.deliveroo.cronParser.service.CronParserDescriptionService;
 import com.deliveroo.cronParser.service.ValidationService;
+import com.deliveroo.cronParser.utils.StringUtils;
+import com.deliveroo.cronParser.utils.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.deliveroo.cronParser.utils.StringUtils;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +44,7 @@ class CronExpressionHandlerTest {
 
         // Assert
         assertEquals(mockOutput, result);
+
         verify(stringUtils).cleanAndNormalize(rawInput);
         verify(validationService).validate(parsedFields);
         verify(descriptionService).describe(parsedFields);
@@ -60,6 +64,7 @@ class CronExpressionHandlerTest {
         );
 
         assertEquals("Minute field error: Value 61 out of range", exception.getMessage());
+
         verify(validationService).validate(parsedFields);
         verify(descriptionService, never()).describe(any());
     }
@@ -78,6 +83,53 @@ class CronExpressionHandlerTest {
         );
 
         assertTrue(ex.getMessage().contains("No input"));
+
         verify(validationService).validate(parsed);
+        verify(descriptionService, never()).describe(any());
+    }
+
+    @Test
+    void handle_knownMacro_shouldExpandAndProcess() {
+        // Arrange
+        String rawInput = "@yearly /usr/bin/find";
+        String[] finalParsedFields = new String[]{"0", "0", "1", "1", "*", "/usr/bin/find"};
+        String mockOutput = "minute        0\n" +
+                "hour          0\n" +
+                "day of month  1\n" +
+                "month         1\n" +
+                "day of week   0 1 2 3 4 5 6\n" +
+                "command       /usr/bin/find";
+
+        when(stringUtils.cleanAndNormalize(rawInput)).thenReturn(finalParsedFields);
+        when(descriptionService.describe(finalParsedFields)).thenReturn(mockOutput);
+
+        // Act
+        String result = handler.handle(rawInput);
+
+        // Assert
+        assertEquals(mockOutput, result);
+
+        verify(stringUtils).cleanAndNormalize(rawInput);
+        verify(validationService).validate(finalParsedFields);
+        verify(descriptionService).describe(finalParsedFields);
+    }
+
+    @Test
+    void handle_unknownMacro_shouldThrow() {
+        // Arrange
+        String rawInput = "@decade";  // Not in MACRO_MAP
+        when(stringUtils.cleanAndNormalize(rawInput)).thenReturn(new String[]{rawInput});
+        doThrow(new AnnotationInvalidException("Unsupported macro: " + rawInput))
+                .when(validationService).validate(new String[]{rawInput});
+
+        // Act & Assert
+        AnnotationInvalidException exception = assertThrows(AnnotationInvalidException.class,
+                () -> handler.handle(rawInput));
+
+        assertTrue(exception.getMessage().contains("Unsupported macro"));
+
+        verify(stringUtils).cleanAndNormalize(rawInput);
+        verify(validationService).validate(new String[]{rawInput});
+        verify(descriptionService, never()).describe(any());
     }
 }

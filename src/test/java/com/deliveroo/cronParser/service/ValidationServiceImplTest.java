@@ -41,6 +41,12 @@ class ValidationServiceImplTest {
         assertDoesNotThrow(() -> validator.validate(fields));
     }
 
+    @Test
+    void validate_annotation_shouldPass() {
+        String[] fields = {"@yearly", "run.sh"};
+        assertDoesNotThrow(() -> validator.validate(fields));
+    }
+
     // -------------------- STRUCTURE ERRORS --------------------
 
     @Test
@@ -50,7 +56,17 @@ class ValidationServiceImplTest {
                 CronExpressionInvalidException.class,
                 () -> validator.validate(fields)
         );
-        assertTrue(ex.getMessage().contains("Expected 6 or 7 fields"));
+        assertTrue(ex.getMessage().contains("6 or 7 fields"));
+    }
+
+    @Test
+    void validate_missingCommandWithMacro_shouldThrow() {
+        String[] fields = {"@yearly"}; // only Macro
+        CronExpressionInvalidException ex = assertThrows(
+                CronExpressionInvalidException.class,
+                () -> validator.validate(fields)
+        );
+        assertTrue(ex.getMessage().contains("6 or 7 fields"));
     }
 
     @Test
@@ -59,10 +75,17 @@ class ValidationServiceImplTest {
                 CronExpressionInvalidException.class,
                 () -> validator.validate(null)
         );
-        assertTrue(ex.getMessage().contains("Expected 6 or 7 fields"));
+        assertTrue(ex.getMessage().contains("6 or 7 fields"));
     }
 
     // -------------------- FIELD-SPECIFIC ERRORS --------------------
+
+    @Test
+    void validate_invalidMacro_shouldThrowAnnotationException() {
+        String[] fields = {"@decade", "cmd"};
+        Exception e = assertThrows(AnnotationInvalidException.class, () -> validator.validate(fields));
+        assertTrue(e.getMessage().contains("Annotation error"));
+    }
 
     @Test
     void validate_invalidMinuteOutOfRange_shouldThrowMinuteException() {
