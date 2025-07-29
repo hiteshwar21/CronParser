@@ -1,10 +1,17 @@
 package com.deliveroo.cronParser.handler;
 
+import com.deliveroo.cronParser.domain.CronExpression;
+import com.deliveroo.cronParser.service.CronOccurrenceGenerator;
 import com.deliveroo.cronParser.service.CronParserDescriptionService;
 import com.deliveroo.cronParser.service.ValidationService;
 import com.deliveroo.cronParser.utils.StringUtils;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.deliveroo.cronParser.utils.AnnotationMapper.MACRO_MAP;
 
@@ -35,6 +42,23 @@ public class CronExpressionHandler {
         return parserService.describe(fields);
     }
 
+    public List<String> handleNextNOccurrences(String rawInput, int n) {
+        String[] fields = stringUtils.cleanAndNormalize(rawInput);
+        validationService.validate(fields);
 
+        CronExpression cronExpr = CronExpression.fromFields(fields);
+        CronOccurrenceGenerator generator = new CronOccurrenceGenerator(cronExpr, ZoneId.systemDefault());
+
+        ZonedDateTime start = ZonedDateTime.now();
+
+        List<ZonedDateTime> occurrences = generator.getNextOccurrences(start, n);
+
+        // Format datetime output as desired
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+
+        return occurrences.stream()
+                .map(dt -> dt.format(formatter))
+                .collect(Collectors.toList());
+    }
 }
 

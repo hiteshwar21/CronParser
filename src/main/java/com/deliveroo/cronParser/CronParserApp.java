@@ -5,6 +5,11 @@ import com.deliveroo.cronParser.handler.CronExpressionHandler;
 import com.deliveroo.cronParser.handler.CronExpressionHandlerFactory;
 import com.deliveroo.cronParser.input.ClientInput;
 import com.deliveroo.cronParser.input.ClientInputFactory;
+
+import java.util.List;
+
+import static com.deliveroo.cronParser.utils.CronConstants.OCCURRENCES;
+
 public class CronParserApp {
     public static void main(String[] args) {
         try {
@@ -16,6 +21,9 @@ public class CronParserApp {
             CronExpressionHandler cronExpressionHandler = CronExpressionHandlerFactory.createDefault();
             String output = cronExpressionHandler.handle(rawInput);
             System.out.println(output);
+
+            List<String> nextRuns = cronExpressionHandler.handleNextNOccurrences(rawInput, OCCURRENCES);
+            nextRuns.forEach(System.out::println);
         } catch (MinuteInvalidException | CommandInvalidException | DayOfWeekInvalidException | MonthInvalidException | HourInvalidException | DayOfMonthInvalidException e) {
             System.err.println(e.getMessage());
             System.exit(1);

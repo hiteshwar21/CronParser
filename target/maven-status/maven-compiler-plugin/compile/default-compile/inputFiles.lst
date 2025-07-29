@@ -1,9 +1,11 @@
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/DayOfWeekFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/utils/AnnotationMapper.java
+/Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/domain/CronExpression.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/AbstractCronFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/CronFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/handler/CronExpressionHandler.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/YearFieldBuilder.java
+/Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/service/CronOccurrenceGenerator.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/utils/CronConstants.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/input/CLIClient.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/service/ValidationService.java

@@ -29,4 +29,6 @@ public class CronConstants {
 
     // For left alignment
     public static final int FIELD_LABEL_WIDTH = 14;
+
+    public static final int OCCURRENCES = 5;
 }
