@@ -19,13 +19,19 @@ public class ValidationServiceImpl implements ValidationService {
         validateDayOfMonth(fields[2]);
         validateMonth(fields[3]);
         validateDayOfWeek(fields[4]);
-        validateCommand(fields[5]);
+
+        if (fields.length == 7) {
+            validateYear(fields[5]);
+            validateCommand(fields[6]);
+        } else {
+            validateCommand(fields[5]);
+        }
     }
 
     private void validateFieldLength(String[] fields) {
-        if (fields == null || fields.length != 6) {
+        if (fields == null || (fields.length != 6 && fields.length != 7)) {
             throw new CronExpressionInvalidException(
-                    "Expected 6 fields (minute, hour, day of month, month, day of week, command), but got " +
+                    "Expected 6 or 7 fields (minute, hour, day of month, month, day of week, [year],  command), but got " +
                             (fields == null ? 0 : fields.length)
             );
         }
@@ -49,6 +55,10 @@ public class ValidationServiceImpl implements ValidationService {
 
     private void validateDayOfWeek(String expr) {
         validateField(expr, MIN_DAY_OF_WEEK, MAX_DAY_OF_WEEK, FIELD_DAY_OF_WEEK, null);
+    }
+
+    private void validateYear(String expr) {
+        validateField(expr, MIN_YEAR, MAX_YEAR, FIELD_YEAR , null);
     }
 
     private void validateField(String expr, int min, int max, String fieldName, Map<String, Integer> symbolicMap) {
@@ -132,6 +142,8 @@ public class ValidationServiceImpl implements ValidationService {
                 return new MonthInvalidException(message);
             case FIELD_DAY_OF_WEEK:
                 return new DayOfWeekInvalidException(message);
+            case FIELD_YEAR:
+                    return new YearInvalidException(message);
             default:
                 return new CronExpressionInvalidException(message);
         }
