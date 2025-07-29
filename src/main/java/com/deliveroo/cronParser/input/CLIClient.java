@@ -1,14 +1,17 @@
 package com.deliveroo.cronParser.input;
 
-public class CLIClient implements ClientInput{
-    private final String cronString;
+import java.util.Collections;
+import java.util.List;
 
+public class CLIClient implements ClientInput {
+    private final String cronString;
     public CLIClient(String cronString) {
         this.cronString = cronString;
     }
 
     @Override
-    public String readInput() {
-        return cronString;
+    public List<String> readInput() {
+        // Return a list with the single CLI expression
+        return Collections.singletonList(cronString);
     }
 }

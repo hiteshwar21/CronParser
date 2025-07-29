@@ -5,16 +5,19 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileClient implements ClientInput{
+public class FileClient implements ClientInput {
     private final String fileName;
-
     public FileClient(String fileName) {
         this.fileName = fileName;
     }
 
     @Override
-    public String readInput() throws Exception {
+    public List<String> readInput() throws Exception {
         List<String> lines = Files.readAllLines(Paths.get(fileName));
-        return lines.stream().collect(Collectors.joining(System.lineSeparator()));
+        // Filter out empty or blank lines (if desired)
+        return lines.stream()
+                .map(String::trim)
+                .filter(line -> !line.isEmpty())
+                .collect(Collectors.toList());
     }
 }

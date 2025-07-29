@@ -1,5 +1,7 @@
 package com.deliveroo.cronParser.input;
 
+import java.util.List;
+
 public interface ClientInput {
-    String readInput() throws Exception;
+    List<String> readInput() throws Exception;
 }
