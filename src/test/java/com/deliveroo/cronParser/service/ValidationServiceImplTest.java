@@ -12,14 +12,26 @@ class ValidationServiceImplTest {
     // -------------------- VALID CASES -------------------------
 
     @Test
-    void validate_validCronExpression_shouldPass() {
+    void validate_validCronExpression_with6Params_shouldPass() {
         String[] fields = {"*/15", "0", "1,15", "*", "1-5", "/usr/bin/find"};
         assertDoesNotThrow(() -> validator.validate(fields));
     }
 
     @Test
-    void validate_allWildcards_shouldPass() {
+    void validate_validCronExpression_with7Params_shouldPass() {
+        String[] fields = {"*/15", "0", "1,15", "*", "1-5", "2026", "/usr/bin/find"};
+        assertDoesNotThrow(() -> validator.validate(fields));
+    }
+
+    @Test
+    void validate_allWildcards_with6Params_shouldPass() {
         String[] fields = {"*", "*", "*", "*", "*", "run.sh"};
+        assertDoesNotThrow(() -> validator.validate(fields));
+    }
+
+    @Test
+    void validate_allWildcards_with7Params_shouldPass() {
+        String[] fields = {"*", "*", "*", "*", "*", "*", "run.sh"};
         assertDoesNotThrow(() -> validator.validate(fields));
     }
 
@@ -32,7 +44,7 @@ class ValidationServiceImplTest {
                 CronExpressionInvalidException.class,
                 () -> validator.validate(fields)
         );
-        assertTrue(ex.getMessage().contains("Expected 6 fields"));
+        assertTrue(ex.getMessage().contains("Expected 6 or 7 fields"));
     }
 
     @Test
@@ -41,7 +53,7 @@ class ValidationServiceImplTest {
                 CronExpressionInvalidException.class,
                 () -> validator.validate(null)
         );
-        assertTrue(ex.getMessage().contains("Expected 6 fields"));
+        assertTrue(ex.getMessage().contains("Expected 6 or 7 fields"));
     }
 
     // -------------------- FIELD-SPECIFIC ERRORS --------------------
@@ -71,6 +83,13 @@ class ValidationServiceImplTest {
     void validate_dayOfWeekOutOfRange_shouldThrowDayOfWeekException() {
         String[] fields = {"0", "0", "1", "1", "8", "run"};
         Exception e = assertThrows(DayOfWeekInvalidException.class, () -> validator.validate(fields));
+        assertTrue(e.getMessage().contains("out of bounds"));
+    }
+
+    @Test
+    void validate_yearOutOfRange_shouldThrowYearException() {
+        String[] fields = {"0", "0", "1", "1", "5", "1970", "run"};
+        Exception e = assertThrows(YearInvalidException.class, () -> validator.validate(fields));
         assertTrue(e.getMessage().contains("out of bounds"));
     }
 

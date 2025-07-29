@@ -1,5 +1,6 @@
 com/deliveroo/cronParser/exception/DayOfWeekInvalidException.class
 com/deliveroo/cronParser/builder/MinutesFieldBuilder.class
+com/deliveroo/cronParser/exception/YearInvalidException.class
 com/deliveroo/cronParser/builder/AbstractCronFieldBuilder.class
 com/deliveroo/cronParser/service/CronParserDescriptionServiceImpl$FieldConfig.class
 com/deliveroo/cronParser/service/CronParserDescriptionService.class
@@ -26,3 +27,4 @@ com/deliveroo/cronParser/service/CronParserDescriptionServiceImpl.class
 com/deliveroo/cronParser/exception/CronExpressionInvalidException.class
 com/deliveroo/cronParser/exception/MonthInvalidException.class
 com/deliveroo/cronParser/service/ValidationServiceImpl.class
+com/deliveroo/cronParser/builder/YearFieldBuilder.class
