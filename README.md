@@ -99,7 +99,10 @@ command       /usr/bin/find
    - Update validateMonth, validateDayOfWeek & parseValue in ValidationService
    - Override Abstract class by creating parseValue in Builders
    - Test Cases
+
 3. Wrap Around Notation
+   - update validateRange
+   - update getRange
 4. Add Batching Support
 5. Add #(Next N occurrence Support)
 6. Add @Yearly, @Monthly Support

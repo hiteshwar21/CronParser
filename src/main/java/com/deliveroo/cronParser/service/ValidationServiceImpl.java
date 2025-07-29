@@ -101,11 +101,7 @@ public class ValidationServiceImpl implements ValidationService {
         int start = parseValue(range[0], symbolicMap, fieldName);
         int end = parseValue(range[1], symbolicMap, fieldName);
 
-        if (start > end) {
-            throw exceptionForField(fieldName, "Range start > end in: '" + part + "'");
-        }
-
-        if (start < min || end > max) {
+        if (!((start >= min && start <= max) && (end >= min && end <= max))) {
             throw exceptionForField(fieldName, "Range [" + start + "-" + end + "] out of bounds (" + min + "-" + max + ")");
         }
     }

@@ -48,8 +48,19 @@ public abstract class AbstractCronFieldBuilder implements CronFieldBuilder {
             String[] bounds = part.split("-");
             int start = parseValue(bounds[0]);
             int end = parseValue(bounds[1]);
-            for (int i = start; i <= end; i++) {
-                range.add(i);
+            if (start <= end) {
+                // Normal range, e.g., 1-5
+                for (int i = start; i <= end; i++) {
+                    range.add(i);
+                }
+            } else {
+                // Wrap-around range, e.g., 22-2
+                for (int i = start; i <= max; i++) {
+                    range.add(i);
+                }
+                for (int i = min; i <= end; i++) {
+                    range.add(i);
+                }
             }
         } else {
             range.add(parseValue(part));

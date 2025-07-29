@@ -54,6 +54,21 @@ class CronParserDescriptionServiceImplTest {
     }
 
     @Test
+    void describeOutputs_forWrapAroundScenarios() {
+        String[] fields = {
+                "*/15", "0", "1,15", "12-4", "WED-FRI", "/usr/bin/find"
+        };
+        String expected = "minute        0 15 30 45\n" +
+                "hour          0\n" +
+                "day of month  1 15\n" +
+                "month         1 2 3 4 12\n" +
+                "day of week   3 4 5\n" +
+                "command       /usr/bin/find";
+        String result = descService.describe(fields);
+        assertEquals(expected, result.trim());
+    }
+
+    @Test
     void describe_handlesAllWildcards_With7Inputs() {
         String[] fields = { "*", "*", "*", "*", "*", "*", "echo test" };
         String result = descService.describe(fields);

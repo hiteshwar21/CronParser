@@ -116,10 +116,9 @@ class ValidationServiceImplTest {
     }
 
     @Test
-    void validate_rangeStartGreaterThanEnd_shouldThrow() {
+    void validate_rangeStartGreaterThanEnd_shouldAllow() {
         String[] fields = {"5-1", "*", "*", "*", "*", "run"};
-        Exception e = assertThrows(MinuteInvalidException.class, () -> validator.validate(fields));
-        assertTrue(e.getMessage().contains("Range start > end"));
+        assertDoesNotThrow(() -> validator.validate(fields));
     }
 
     @Test
