@@ -117,6 +117,12 @@ command       /usr/bin/find
    - Make changes to validationService based on length and remember to return
    - Add one more check at Handler level based on fieldLength (String is immutable, use a defensive Copy and append)
    - Update Test Cases
+   
 6. Add # - Nth Occurrence()
+   - Update DayOfWeek for validation
+   - Override Builder for DayOfWeek - expand
+   - update private to protected in AbstractBuilder
+   - Update Test Cases
+   
 7. Next N occurrence Support
 8. Handle SubCommands

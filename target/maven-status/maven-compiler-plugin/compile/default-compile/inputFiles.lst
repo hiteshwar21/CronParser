@@ -1,4 +1,5 @@
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/DayOfWeekFieldBuilder.java
+/Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/utils/AnnotationMapper.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/AbstractCronFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/CronFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/handler/CronExpressionHandler.java
@@ -11,6 +12,7 @@
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/MinutesFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/input/ClientInputFactory.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/handler/CronExpressionHandlerFactory.java
+/Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/AnnotationInvalidException.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/HourInvalidException.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/service/CronParserDescriptionService.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/service/CronParserDescriptionServiceImpl.java

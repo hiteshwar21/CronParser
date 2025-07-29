@@ -37,7 +37,7 @@ public abstract class AbstractCronFieldBuilder implements CronFieldBuilder {
         return results;
     }
 
-    private List<Integer> getRange(String part) {
+    protected List<Integer> getRange(String part) {
         List<Integer> range = new ArrayList<>();
 
         if (part.equals("*")) {

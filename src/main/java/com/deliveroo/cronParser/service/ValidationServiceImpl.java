@@ -1,13 +1,16 @@
 package com.deliveroo.cronParser.service;
 
 import com.deliveroo.cronParser.exception.*;
+import com.deliveroo.cronParser.utils.CronConstants;
 import com.deliveroo.cronParser.utils.SymbolicValueMapper;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.deliveroo.cronParser.utils.AnnotationMapper.MACRO_MAP;
 import static com.deliveroo.cronParser.utils.CronConstants.*;
+import static com.deliveroo.cronParser.utils.StringUtils.NTH_OCCURRENCE_PATTERN;
 
 public class ValidationServiceImpl implements ValidationService {
 
@@ -71,7 +74,26 @@ public class ValidationServiceImpl implements ValidationService {
     }
 
     private void validateDayOfWeek(String expr) {
-        validateField(expr, MIN_DAY_OF_WEEK, MAX_DAY_OF_WEEK, FIELD_DAY_OF_WEEK, SymbolicValueMapper.DAYS_OF_WEEK);
+        String[] parts = expr.trim().split(",");
+        for (String part : parts) {
+            if (part.equals("*")) {
+                continue;
+            }
+            Matcher matcher = NTH_OCCURRENCE_PATTERN.matcher(part.toUpperCase());
+            if (matcher.matches()) {
+                String dayPart = matcher.group(1);
+                String nthPart = matcher.group(2);
+                // Validate day part
+                parseValue(dayPart, SymbolicValueMapper.DAYS_OF_WEEK, FIELD_DAY_OF_WEEK);
+                // Validate nth occurrence
+                int nth = Integer.parseInt(nthPart);
+                if (nth < 1 || nth > 5) {
+                    throw new DayOfWeekInvalidException("Invalid nth occurrence in day of week: " + nth);
+                }
+            } else {
+                validateField(part, CronConstants.MIN_DAY_OF_WEEK, CronConstants.MAX_DAY_OF_WEEK, FIELD_DAY_OF_WEEK, SymbolicValueMapper.DAYS_OF_WEEK);
+            }
+        }
     }
 
     private void validateYear(String expr) {

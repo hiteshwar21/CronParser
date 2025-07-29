@@ -47,7 +47,32 @@ class ValidationServiceImplTest {
         assertDoesNotThrow(() -> validator.validate(fields));
     }
 
+    @Test
+    void validateDayOfWeek_acceptsValidNthOccurrences_numeric() {
+        assertDoesNotThrow(() -> validator.validate(new String[]{
+                "0", "0", "1", "1", "1#1", "command"
+        }));
+
+        assertDoesNotThrow(() -> validator.validate(new String[]{
+                "0", "0", "1", "1", "MON#1", "command"
+        }));
+
+        assertDoesNotThrow(() -> validator.validate(new String[]{
+                "0", "0", "1", "1", "6#2", "command"
+        }));
+    }
+
     // -------------------- STRUCTURE ERRORS --------------------
+
+    @Test
+    void validateDayOfWeek_rejectsMalformedNthOccurrence_multipleHashes() {
+        DayOfWeekInvalidException ex = assertThrows(DayOfWeekInvalidException.class, () ->
+                validator.validate(new String[]{
+                        "0", "0", "1", "1", "1#1#1", "command"
+                })
+        );
+        assertTrue(ex.getMessage().contains("#"));
+    }
 
     @Test
     void validate_missingFields_shouldThrow() {
