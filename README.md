@@ -83,3 +83,24 @@ command       /usr/bin/find
 2. Detailed validation with field-specific error messages
 3. Output formatted as a table (14 char column spacing as per spec)
 4. Unit test coverage for all logic (Input, Parser, Builder, Validation)
+
+## Practice Additions
+1. Add Extra Fields
+   - validateFieldLength - Need to update to accept 7 values too
+   - create validateYear
+   - create YearInvalidException
+   - Add Constants
+   - create YearFieldBuilder
+   - CronParserDescriptionServiceImpl changes - resolveFieldConfigs
+   - Test Cases
+   
+2. Add Symbol Name Support
+   - Create SymbolicValueMapper
+   - Update validateMonth, validateDayOfWeek & parseValue in ValidationService
+   - Override Abstract class by creating parseValue in Builders
+   - Test Cases
+3. Wrap Around Notation
+4. Add Batching Support
+5. Add #(Next N occurrence Support)
+6. Add @Yearly, @Monthly Support
+7. Handle SubCommands

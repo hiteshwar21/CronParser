@@ -1,6 +1,7 @@
 package com.deliveroo.cronParser.service;
 
 import com.deliveroo.cronParser.exception.*;
+import com.deliveroo.cronParser.utils.SymbolicValueMapper;
 
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -50,11 +51,11 @@ public class ValidationServiceImpl implements ValidationService {
     }
 
     private void validateMonth(String expr) {
-        validateField(expr, MIN_MONTH, MAX_MONTH, FIELD_MONTH, null);
+        validateField(expr, MIN_MONTH, MAX_MONTH, FIELD_MONTH, SymbolicValueMapper.MONTHS);
     }
 
     private void validateDayOfWeek(String expr) {
-        validateField(expr, MIN_DAY_OF_WEEK, MAX_DAY_OF_WEEK, FIELD_DAY_OF_WEEK, null);
+        validateField(expr, MIN_DAY_OF_WEEK, MAX_DAY_OF_WEEK, FIELD_DAY_OF_WEEK, SymbolicValueMapper.DAYS_OF_WEEK);
     }
 
     private void validateYear(String expr) {
@@ -119,6 +120,8 @@ public class ValidationServiceImpl implements ValidationService {
     private int parseValue(String token, Map<String, Integer> symbolicMap, String fieldName) {
         if (NUMBER.matcher(token).matches()) {
             return Integer.parseInt(token);
+        } else if (symbolicMap != null && symbolicMap.containsKey(token)) {
+            return symbolicMap.get(token);
         } else {
             throw exceptionForField(fieldName, "Invalid symbolic value: '" + token + "'");
         }

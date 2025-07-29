@@ -46,13 +46,13 @@ public abstract class AbstractCronFieldBuilder implements CronFieldBuilder {
             }
         } else if (part.contains("-")) {
             String[] bounds = part.split("-");
-            int start = Integer.parseInt(bounds[0]);
-            int end = Integer.parseInt(bounds[1]);
+            int start = parseValue(bounds[0]);
+            int end = parseValue(bounds[1]);
             for (int i = start; i <= end; i++) {
                 range.add(i);
             }
         } else {
-            range.add(Integer.parseInt(part));
+            range.add(parseValue(part));
         }
 
         return range;
@@ -66,6 +66,10 @@ public abstract class AbstractCronFieldBuilder implements CronFieldBuilder {
             sb.append(val).append(" ");
         }
         return sb.toString().trim();
+    }
+
+    protected int parseValue(String part) {
+        return Integer.parseInt(part);
     }
 }
 

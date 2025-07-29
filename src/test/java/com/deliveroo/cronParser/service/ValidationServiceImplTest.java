@@ -35,6 +35,12 @@ class ValidationServiceImplTest {
         assertDoesNotThrow(() -> validator.validate(fields));
     }
 
+    @Test
+    void validate_symbols_shouldPass() {
+        String[] fields = {"*", "*", "*", "Jan", "*", "*", "run.sh"};
+        assertDoesNotThrow(() -> validator.validate(fields));
+    }
+
     // -------------------- STRUCTURE ERRORS --------------------
 
     @Test

@@ -39,7 +39,22 @@ class CronParserDescriptionServiceImplTest {
     }
 
     @Test
-    void describe_handlesAllWildcards() {
+    void describeOutputs_forSymbols() {
+        String[] fields = {
+                "*/15", "0", "1,15", "Jan-mAr", "WED-FRI", "/usr/bin/find"
+        };
+        String expected = "minute        0 15 30 45\n" +
+                "hour          0\n" +
+                "day of month  1 15\n" +
+                "month         1 2 3\n" +
+                "day of week   3 4 5\n" +
+                "command       /usr/bin/find";
+        String result = descService.describe(fields);
+        assertEquals(expected, result.trim());
+    }
+
+    @Test
+    void describe_handlesAllWildcards_With7Inputs() {
         String[] fields = { "*", "*", "*", "*", "*", "*", "echo test" };
         String result = descService.describe(fields);
         assertTrue(result.contains("minute"));
@@ -53,7 +68,7 @@ class CronParserDescriptionServiceImplTest {
     }
 
     @Test
-    void describe_handles_all_wildcards() {
+    void describe_handlesAllWildcards() {
         String[] fields = { "*", "*", "*", "*", "*", "*", "echo test" };
         String result = descService.describe(fields);
         assertTrue(result.contains("minute"));
@@ -66,7 +81,7 @@ class CronParserDescriptionServiceImplTest {
     }
 
     @Test
-    void describe_handles_edge_values_and_spacing() {
+    void describe_handlesEdgeValuesAndSpacing() {
         String[] fields = { "59", "23", "31", "12", "0", "ls -la" };
         String expected = "minute        59\n" +
                 "hour          23\n" +

@@ -15,4 +15,12 @@ class DayOfWeekFieldBuilderTest {
                 builder.describe("*")
         );
     }
+
+    @Test
+    void describe_Symbols() {
+        assertEquals(
+                "3",
+                builder.describe("Wed")
+        );
+    }
 }

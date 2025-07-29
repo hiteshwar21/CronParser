@@ -18,6 +18,7 @@
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/builder/HoursFieldBuilder.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/CronExpressionInvalidException.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/utils/StringUtils.java
+/Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/utils/SymbolicValueMapper.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/YearInvalidException.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/MonthInvalidException.java
 /Users/godofhearts/Documents/CronParser_BaseSetup-Private/src/main/java/com/deliveroo/cronParser/exception/CommandInvalidException.java

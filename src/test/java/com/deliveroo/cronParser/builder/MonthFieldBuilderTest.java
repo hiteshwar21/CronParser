@@ -15,4 +15,12 @@ class MonthFieldBuilderTest {
                 builder.describe("*")
         );
     }
+
+    @Test
+    void describe_Symbols() {
+        assertEquals(
+                "8",
+                builder.describe("Aug")
+        );
+    }
 }
