@@ -101,16 +101,9 @@ command       /usr/bin/find
    - Test Cases
 
 3. Wrap Around Notation
-   - Discuss if next hour is something we are handling
    - update validateRange
    - update getRange
-
 4. Add Batching Support
-   - error handling gracefully
-   - Modify ClientInput Interface to take a List
-   - Update CLIClient to return Collections.singletonList(cronString)
-   - Update FileClient to read & return List<String> lines
-   - Update Test Cases
 5. Add #(Next N occurrence Support)
 6. Add @Yearly, @Monthly Support
 7. Handle SubCommands

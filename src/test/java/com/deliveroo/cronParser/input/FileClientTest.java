@@ -23,9 +23,10 @@ public class FileClientTest {
         Files.write(file, lines);
 
         FileClient fileClient = new FileClient(file.toString());
-        List<String> result = fileClient.readInput();
+        String result = fileClient.readInput();
 
-        assertEquals(lines, result);
+        String expected = String.join(System.lineSeparator(), lines);
+        assertEquals(expected, result);
     }
 
     @Test
